@@ -1,26 +1,32 @@
 var Person = Backbone.Model.extend({
-
   // The default values
   defaults: {
     name: 'The Mini John',
     age: 23,
     occupation: 'Worker'
+  }
+});
+
+// Views
+var PersonView = Backbone.View.extend({
+
+  // Overwriting Tags
+  tagName: 'li',
+  className: 'person',
+  id: 'some-person',
+
+  // On init
+  initialize: function() {
+    this.render();
   },
 
-  // Validation (Will trigger when setting an attribute)
-  validate: function(attrs) {
-    if (attrs.age < 0) {
-      return 'Age must be positive, stupid!';
-    }
 
-    if (!attrs.name) {
-      return 'Every Person must have a Name, fool!';
-    }
-  },
-
-  // Adding a Function
-  work: function() {
-    return this.get('name') + ' is working.'
+  render: function() {
+    // Anti-Pattern ->
+    this.$el.html( this.model.get('name') + ' (' + this.model.get('age') + ') - ' + this.model.get('occupation')) ;
   }
 
 });
+
+var person = new Person;
+var personView = new PersonView({model: person})
