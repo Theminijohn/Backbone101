@@ -16,8 +16,7 @@ var PersonView = Backbone.View.extend({
   id: 'some-person',
 
   // Templating Engine
-  // Can append HTML Tags
-  template: _.template("<%= name %> (<%= age%>) - <%= occupation%>"),
+  template: _.template( $('#personTemplate').html() ),
 
   // On init
   initialize: function() {
@@ -29,6 +28,7 @@ var PersonView = Backbone.View.extend({
     // Anti-Pattern ->
     // this.$el.html( this.model.get('name') + ' (' + this.model.get('age') + ') - ' + this.model.get('occupation')) ;
 
+    // Rendering the Template
     this.$el.html( this.template(this.model.toJSON()) );
   }
 
@@ -36,3 +36,7 @@ var PersonView = Backbone.View.extend({
 
 var person = new Person;
 var personView = new PersonView({model: person})
+
+// Not good...
+var person2 = new Person({ name: "Someone", age: 38});
+var personView2 = new PersonView({model: person2})
