@@ -15,15 +15,21 @@ var PersonView = Backbone.View.extend({
   className: 'person',
   id: 'some-person',
 
+  // Templating Engine
+  // Can append HTML Tags
+  template: _.template("<%= name %> (<%= age%>) - <%= occupation%>"),
+
   // On init
   initialize: function() {
     this.render();
   },
 
-
+  // Rendering (to output)
   render: function() {
     // Anti-Pattern ->
-    this.$el.html( this.model.get('name') + ' (' + this.model.get('age') + ') - ' + this.model.get('occupation')) ;
+    // this.$el.html( this.model.get('name') + ' (' + this.model.get('age') + ') - ' + this.model.get('occupation')) ;
+
+    this.$el.html( this.template(this.model.toJSON()) );
   }
 
 });
