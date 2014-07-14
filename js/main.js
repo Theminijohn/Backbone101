@@ -1,3 +1,4 @@
+// Person Model
 var Person = Backbone.Model.extend({
   // The default values
   defaults: {
@@ -7,7 +8,13 @@ var Person = Backbone.Model.extend({
   }
 });
 
-// Views
+// A List of People (Collection)
+var PeopleCollection = Backbone.Collection.extend({
+  // What type of model are we working with
+  model: Person
+});
+
+// The View for a Person
 var PersonView = Backbone.View.extend({
 
   // Overwriting Tags
@@ -34,9 +41,22 @@ var PersonView = Backbone.View.extend({
 
 });
 
-var person = new Person;
-var personView = new PersonView({model: person})
 
-// Not good...
-var person2 = new Person({ name: "Someone", age: 38});
-var personView2 = new PersonView({model: person2})
+var peopleCollection = new PeopleCollection([
+  {
+    name: 'Jeffrey Way',
+    age: 27
+  },
+  {
+    name: "John Doe",
+    age: 50,
+    occupation: "Web Designer"
+  },
+  {
+    name: "Sally Doe",
+    age: 29,
+    occupation: "Graphic Designer"
+  }
+]);
+
+console.log(peopleCollection);
