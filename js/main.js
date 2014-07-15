@@ -1,6 +1,19 @@
-var template = function(id) {
-  return _.template( $('#' + id).html() );
-};
+(function() {
+
+  window.App = {};
+
+  window.template = function(id) {
+    return _.template( $('#' + id).html() );
+  };
+
+  App.Person = Backbone.Model.extend({});
+  App.PersonView = Backbone.View.extend({});
+  App.PeopleCollection = Backbone.Collection.extend({});
+
+  var person = new App.Person();
+
+
+})();
 
 // Person Model
 var Person = Backbone.Model.extend({
