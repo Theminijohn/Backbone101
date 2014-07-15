@@ -14,6 +14,29 @@ var PeopleCollection = Backbone.Collection.extend({
   model: Person
 });
 
+// The View for all People
+var PeopleView = Backbone.View.extend({
+  tagName: 'ul',
+
+  render: function() {
+    // filter through all items in collection
+    this.collection.each(function(person) {
+      // for each, create a new PersonView
+      var personView = new PersonView({model: person});
+
+      // append to root element
+      this.$el.append(personView.render().el);
+
+
+    }, this);
+
+    // always return this from render method
+    return this;
+
+
+  }
+});
+
 // The View for a Person
 var PersonView = Backbone.View.extend({
 
@@ -25,18 +48,12 @@ var PersonView = Backbone.View.extend({
   // Templating Engine
   template: _.template( $('#personTemplate').html() ),
 
-  // On init
-  initialize: function() {
-    this.render();
-  },
 
   // Rendering (to output)
   render: function() {
-    // Anti-Pattern ->
-    // this.$el.html( this.model.get('name') + ' (' + this.model.get('age') + ') - ' + this.model.get('occupation')) ;
-
     // Rendering the Template
     this.$el.html( this.template(this.model.toJSON()) );
+    return this; // always return this from render methods
   }
 
 });
@@ -59,4 +76,6 @@ var peopleCollection = new PeopleCollection([
   }
 ]);
 
-console.log(peopleCollection);
+var peopleView = new PeopleView({ collection: peopleCollection});
+
+$(document.body).append(peopleView.render().el);
