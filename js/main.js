@@ -1,3 +1,7 @@
+var template = function(id) {
+  return _.template( $('#' + id).html() );
+};
+
 // Person Model
 var Person = Backbone.Model.extend({
   // The default values
@@ -46,7 +50,7 @@ var PersonView = Backbone.View.extend({
   id: 'some-person',
 
   // Templating Engine
-  template: _.template( $('#personTemplate').html() ),
+  template: template('personTemplate'),
 
 
   // Rendering (to output)
