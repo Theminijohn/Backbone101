@@ -10,7 +10,13 @@
     return _.template( $('#' + id).html() );
   };
 
-  App.Models.Task = Backbone.Model.extend({});
+  App.Models.Task = Backbone.Model.extend({
+    validate: function(attrs){
+      if (! $.trim(attrs.title)) {
+        return 'A task requires a valid title!'
+      }
+    }
+  });
 
   App.Collections.Tasks = Backbone.Collection.extend({
     model: App.Models.Task
@@ -51,6 +57,10 @@
 
     editTask: function() {
       var newTaskTitle = prompt('What would you like to change the text to?', this.model.get('title'));
+
+      // Validating (When cancel is pressed or null is returned)
+      if (!newTaskTitle) return;
+
       this.model.set('title', newTaskTitle)
     },
 
