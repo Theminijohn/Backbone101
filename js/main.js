@@ -38,6 +38,13 @@
 
     template: template('taskTemplate'),
 
+    initialize: function() {
+      // _.bind_all(this, 'editTask', 'render')
+
+      // When the model is changed, listen to it
+      this.model.on('change', this.render, this)
+    },
+
     events: {
       'click .edit': 'editTask'
     },
