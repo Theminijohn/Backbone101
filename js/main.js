@@ -48,11 +48,13 @@
       // _.bind_all(this, 'editTask', 'render')
 
       // When the model is changed, listen to it
-      this.model.on('change', this.render, this)
+      this.model.on('change', this.render, this);
+      this.model.on('destroy', this.remove, this);
     },
 
     events: {
-      'click .edit': 'editTask'
+      'click .edit': 'editTask',
+      'click .delete': 'destroy'
     },
 
     editTask: function() {
@@ -62,6 +64,14 @@
       if (!newTaskTitle) return;
 
       this.model.set('title', newTaskTitle)
+    },
+
+    destroy: function() {
+      this.model.destroy();
+    },
+
+    remove: function() {
+      this.$el.remove();
     },
 
     render: function() {
