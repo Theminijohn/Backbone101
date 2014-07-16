@@ -7,36 +7,41 @@
     Router: {}
   };
 
+  var vent = _.extend({}, Backbone.Events);
+
+  App.Views.Appointments = Backbone.View.extend({
+    initialize: function() {
+      vent.on('appointment:show', this.show, this)
+    },
+
+    show: function(id) {
+      var appointment = this.collection.get(id);
+      new App.Views.Appointment({ model: appointment });
+
+      $(document.body).append(appointmentView.render().el);
+    }
+  });
+
+  console.log(vent);
+
   App.Router = Backbone.Router.extend({
     routes: {
       '': 'index',
-      'show/:id': 'show',
-      'download/:id*filename': 'download',
-      'search/:query': 'search',
-      '*other': 'default'
+      'appointment/:id': 'showAppointment'
     },
 
     index: function() {
-      console.log('Hi there from the index')
+      console.log('Hi there from the index page');
     },
 
-    show: function(id){
-      console.log('Show route for id of ' + id)
-    },
-
-    download: function(filename){
-      console.log(filename)
-    },
-
-    search: function(query) {
-      console.log(query)
-    },
-
-    default: function(other) {
-      alert('Hmmm... not sure waht you need here? You accessed to: ' + other)
+    showAppointment: function(appointmentId) {
+      vent.trigger('appointment:show', appointmentId)
     }
 
+
   });
+
+  new App.Views.Appointments({collection: someCollection});
 
   new App.Router;
   Backbone.history.start();
